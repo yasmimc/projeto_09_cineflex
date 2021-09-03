@@ -1,11 +1,11 @@
-.Session {
+.SessionSeats {
     display: flex;
     flex-direction: column;
 
     align-items: center;
 }
 
-.Session button {
+.SessionSeats button {
     border-radius: 50%;
     border: 1px solid #808F9D;
     width: 26px;
@@ -15,13 +15,13 @@
     font-size: 11px;
 }
 
-.Session .labels {
+.SessionSeats .labels {
     display: flex;
     justify-content: space-around;
     width: calc(100vw - 60px);
 }
 
-.Session .labels li {
+.SessionSeats .labels li {
     margin-top: 20px;
 
     display: flex;
@@ -29,44 +29,44 @@
     align-items: center;
 }
 
-.Session .labels p {
+.SessionSeats .labels p {
     font-size: 13px;
     color: #4E5A65;
 }
 
-.Session .labels .circle {
+.SessionSeats .labels .circle {
     width: 24px;
     height: 24px;
     background-color: black;
     border-radius: 50%;
 }
 
-.Session .labels .selected {
+.SessionSeats .labels .selected {
     background-color: #8DD7CF;
     border: 1px solid #1AAE9E;
 }
 
-.Session .labels .available {
+.SessionSeats .labels .available {
     background-color: #C3CFD9;
     border: 1px solid #7B8B99;
 }
 
-.Session .labels .unavailable {
+.SessionSeats .labels .unavailable {
     background-color: #FBE192;
     border: 1px solid #F7C52B;
 }
 
-.Session .form {
+.SessionSeats .form {
     width: calc(100vw - 60px);
     margin: 0 ;
     margin-top: 30px;
 }
 
-.Session .form p {
+.SessionSeats .form p {
     font-size: 18px;
 }
 
-.Session .form input{
+.SessionSeats .form input{
     height: 51px;
     width: 100%;
 
@@ -83,7 +83,7 @@
     border-radius: 3px;
 }
 
-.Session button.submit {
+.SessionSeats button.submit {
     width: 225px;
     height: 42px;
     left: 72px;

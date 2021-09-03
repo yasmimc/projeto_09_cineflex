@@ -1,39 +1,54 @@
 import { useParams } from 'react-router-dom';
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
-
-import teste from "../Movies/teste.jpg"
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
 
 import "../Sessions/Sessions.css"
 
-export default function Sessions(){
+import Footer from "../Footer/Footer"
+
+const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex"
+
+export default function Sessions() {
     const params = useParams();
-    console.log(params)
-    return(
+
+    const { idMovie } = params;
+
+    const [movieSessions, setMovieSessions] = useState([]);
+
+    const promise = axios.get(`${API_CINEFLEX}/movies/${idMovie}/showtimes`)
+    useEffect(() => {
+        promise.then((resp) => setMovieSessions([...resp.data.days]))
+    }, []);
+
+    return (
         <div className="Sessions">
             <h2>Selecione o horário</h2>
             <ul>
-                <li>
-                    <p>Quinta Feira - 24/06/2021</p>
-                    <Link to="/filme/sessao/1">
-                        <button>15:00</button>
-                    </Link>
-                    <Link to="/filme/sessao/1">
-                        <button>19:00</button>
-                    </Link>
-                </li>
-                <li>
-                    <p>Sexta Feira - 25/06/2021</p>
-                    <Link to="/filme/sessao/1">
-                        <button>15:00</button>
-                    </Link>
-                    <Link to="/filme/sessao/1">
-                        <button>19:00</button>
-                    </Link>
-                </li>
+                {movieSessions.map((session) => (
+                    <Session
+                        key={session.id}
+                        session={session}
+                    />
+                ))}
             </ul>
-            
+            <Footer />
         </div>
     );
 }
 
+function Session(props) {
+    const { session } = props;
+    console.log(session)
+    return (
+        <li>
+            <p>{`${session.weekday} - ${session.date}`}</p>
+            {session.showtimes.map((showtime)=>(                
+                <Link to={`/filme/assentos/${showtime.id}`}>
+                    <button>{showtime.name}</button>
+                </Link>                
+            ))}
+        </li>
+    );
+}

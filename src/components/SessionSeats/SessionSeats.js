@@ -1,12 +1,12 @@
 
 import { Link } from "react-router-dom"
-import "../Session/Session.css"
+import "./SessionSeats.css"
 
 
-export default function Session() {
+export default function SessionSeats() {
     const assento = "01"
     return (
-        <div className="Session">
+        <div className="SessionSeats">
             <h2>Selecione o(s) assento(s)</h2>
             <div>
                 <button> {assento} </button>

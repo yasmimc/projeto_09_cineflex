@@ -1,20 +1,26 @@
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
 
 import "../Movies/Movies.css"
 
-export default function Movies(props) {
-    const { 
-        movies 
-    } = props;
+const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex"
 
-    console.log(movies)
+
+export default function Movies() {
+    const [moviesList, setMoviesList] = useState([]);
+
+    const promise = axios.get(`${API_CINEFLEX}/movies`)
+    useEffect(()=>{
+        promise.then((resp)=>setMoviesList([...resp.data]))        
+    }, []);
 
     return (
         <div >
             <h2>Selecione o filme</h2>
             <div className="movies">
-                {movies.map((movie)=>(
+                {moviesList.map((movie)=>(
                     <Movie 
                         key={movie.id}
                         idFilme={movie.id}
@@ -27,7 +33,6 @@ export default function Movies(props) {
 }
 
 function Movie(props) {
-    console.log(props)
     const {
         idFilme,
         posterURl
