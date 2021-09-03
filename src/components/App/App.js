@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import axios from 'axios';
 
 import "../../reset.css";
 import "../App/App.css";
@@ -12,15 +13,25 @@ import Sucess from "../Sucess/Sucess";
 
 import teste from "../Movies/teste.jpg"
 
+const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex"
 
 export default function App() {
-    
+
+    const [moviesList, setMoviesList] = useState([]);
+
+    const promise = axios.get(`${API_CINEFLEX}/movies`)
+    useEffect(()=>{
+        promise.then((resp)=>setMoviesList([...resp.data]))
+        console.log(moviesList)
+        
+    }, []);
+
     return (
         <BrowserRouter>
             <Header></Header>
             <Switch>
                 <Route path="/" exact>
-                    <Movies></Movies>
+                    <Movies movies={moviesList}></Movies>
                 </Route>
                 <Route path="/filme/:idFilme" exact>
                     <Sessions></Sessions>
