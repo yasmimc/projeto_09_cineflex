@@ -22,10 +22,10 @@ export default function App() {
                 <Route path="/filme/:idMovie" exact>
                     <Sessions></Sessions>                    
                 </Route>
-                <Route path="/filme/assentos/:idSessao" exact>
+                <Route path="/filme/assentos/:idSession" exact>
                     <SessionSeats></SessionSeats>
                 </Route>
-                <Route path="/filme/sessao/:idSessao/sucesso" exact>
+                <Route path="/filme/sessao/:idSession/sucesso" exact>
                     <Sucess></Sucess>
                 </Route>
             </Switch>

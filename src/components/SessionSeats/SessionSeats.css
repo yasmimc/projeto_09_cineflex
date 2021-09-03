@@ -37,21 +37,20 @@
 .SessionSeats .labels .circle {
     width: 24px;
     height: 24px;
-    background-color: black;
     border-radius: 50%;
 }
 
-.SessionSeats .labels .selected {
+.selected {
     background-color: #8DD7CF;
     border: 1px solid #1AAE9E;
 }
 
-.SessionSeats .labels .available {
+.available {
     background-color: #C3CFD9;
     border: 1px solid #7B8B99;
 }
 
-.SessionSeats .labels .unavailable {
+.unavailable {
     background-color: #FBE192;
     border: 1px solid #F7C52B;
 }

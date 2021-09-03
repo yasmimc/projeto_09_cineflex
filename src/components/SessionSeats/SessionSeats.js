@@ -1,54 +1,44 @@
 
 import { Link } from "react-router-dom"
 import "./SessionSeats.css"
+import Footer from "../Footer/Footer";
 
+import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
+
+
+import "../Sessions/Sessions.css"
+
+
+const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex"
 
 export default function SessionSeats() {
-    const assento = "01"
+
+    const params = useParams();
+    const { idSession } = params;
+
+    const [session, setSession] = useState({});
+
+    const promise = axios.get(`${API_CINEFLEX}/showtimes/${idSession}/seats`);
+
+    useEffect(()=>(
+        promise.then((resp)=>setSession({...resp.data}))
+    ), [])
+
+    console.log(session)
+    
     return (
         <div className="SessionSeats">
             <h2>Selecione o(s) assento(s)</h2>
             <div>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
-                <button> {assento} </button>
+               {session.seats ? session.seats.map((seat, index)=>(
+                   <Seat 
+                        key = {seat.id}
+                        seat = {seat} 
+                        index = {index}
+                   />
+               )) : "Carregando assentos..."}
             </div>
 
             <ul className="labels">
@@ -78,6 +68,21 @@ export default function SessionSeats() {
                     Reservar assento(s)
                 </button>
             </Link>
+
+            <Footer />
+
         </div>
     );
+}
+
+function Seat(props){
+    const {
+        seat,
+        index
+    } = props;
+    return(
+        <button className={seat.isAvailable ? "available" : "unavailable"}>
+            {index + 1}
+        </button>
+    )
 }

@@ -40,12 +40,11 @@ export default function Sessions() {
 
 function Session(props) {
     const { session } = props;
-    console.log(session)
     return (
         <li>
             <p>{`${session.weekday} - ${session.date}`}</p>
             {session.showtimes.map((showtime)=>(                
-                <Link to={`/filme/assentos/${showtime.id}`}>
+                <Link key={session.id} to={`/filme/assentos/${showtime.id}`}>
                     <button>{showtime.name}</button>
                 </Link>                
             ))}
