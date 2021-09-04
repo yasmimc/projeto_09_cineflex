@@ -19,21 +19,23 @@ export default function Sessions() {
 
     const promise = axios.get(`${API_CINEFLEX}/movies/${idMovie}/showtimes`)
     useEffect(() => {
-        promise.then((resp) => setMovieSessions([...resp.data.days]))
+        promise.then((resp) => setMovieSessions({...resp.data}))
     }, []);
+
+    console.log(movieSessions)
 
     return (
         <div className="Sessions">
             <h2>Selecione o horário</h2>
             <ul>
-                {movieSessions.map((session) => (
+                {movieSessions.days ? movieSessions.days.map((session) => (
                     <Session
                         key={session.id}
                         session={session}
                     />
-                ))}
+                )) : ""}
             </ul>
-            <Footer />
+            <Footer movie = {movieSessions}/>
         </div>
     );
 }

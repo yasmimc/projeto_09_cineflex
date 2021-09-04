@@ -69,7 +69,11 @@ export default function SessionSeats() {
                 </button>
             </Link>
 
-            <Footer />
+            <Footer 
+                movie = {session.movie}
+                day = {session.day}
+                time = {session.name}
+            />
 
         </div>
     );
