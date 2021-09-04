@@ -84,7 +84,6 @@ function Seat(props){
         if(seat.isAvailable) setIsSelected(true);
         else alert("Esse assento não está disponível");
         if(isSelected) setIsSelected(false);
-
     }
 
     return(
