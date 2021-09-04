@@ -15,8 +15,6 @@ export default function SessionSeats(props) {
         finalBooking, 
         setFinalBooking 
     } = props;
-    console.log(finalBooking)
-
 
     const params = useParams();
     const { idSession } = params;
@@ -28,6 +26,12 @@ export default function SessionSeats(props) {
     useEffect(()=>(
         promise.then((resp)=>setSession({...resp.data}))
     ), []);
+
+    const booking = {...finalBooking};
+
+    function book(){
+        setFinalBooking({...booking});
+    }
     
     return (
         <Container>
@@ -61,13 +65,13 @@ export default function SessionSeats(props) {
 
             <Forms>
                 <h3>Nome do comprador:</h3>
-                <input type="text" placeholder="Digite seu nome..." ></input>
+                <input onChange={(e)=>{booking.name = e.target.value}} type="text" placeholder="Digite seu nome..." ></input>
                 <h3>CPF do comprador:</h3>
-                <input type="number" placeholder="Digite seu CPF..." ></input>
+                <input onChange={(e)=>{booking.cpf = e.target.value}} type="number" placeholder="Digite seu CPF..." ></input>
             </Forms>
 
-            <Link to="/filme/sessao/:idSessao/sucesso">
-                <button className="submit">
+            <Link to={booking.name && booking.cpf && booking.ids.length > 0 ? "/filme/sessao/:idSessao/sucesso" : `/filme/assentos/${idSession}`}>
+                <button onClick={book} className="submit">
                     Reservar assento(s)
                 </button>
             </Link>
@@ -89,14 +93,12 @@ function Seat(props){
         setFinalBooking
     } = props;
 
-
     const [isSelected, setIsSelected] = useState(false);
 
     const booking = {...finalBooking};
 
     function select(){
         if(seat.isAvailable) {
-            console.log(finalBooking.ids)
             setIsSelected(true);
             booking.ids.push(seat.id);
             setFinalBooking({...booking});
