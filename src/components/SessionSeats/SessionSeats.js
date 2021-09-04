@@ -124,17 +124,25 @@ function Seat(props){
 
     const booking = {...finalBooking};
 
-    function select(){
-        if(seat.isAvailable) {
-            setIsSelected(true);
-            booking.ids.push(seat.id);
-            setFinalBooking({...booking});
-        }
-        else alert("Esse assento não está disponível");
-        if(isSelected) setIsSelected(false);
+    function unselect(seatNumber, seatsList){
+        setIsSelected(false);
 
+        const indexUnselectedSeat = seatsList.indexOf(seatsList.find((seat) => seat === seatNumber));
+        seatsList.splice(indexUnselectedSeat, 1);        
+    }
+
+    function select(){
         const bookingInfos = {...confirmedBooking};
-        bookingInfos.seats.push(index + 1);
+        if(isSelected) unselect(index+1, bookingInfos.seats);
+        else{
+            if(seat.isAvailable) {
+                setIsSelected(true);
+                booking.ids.push(seat.id);
+                setFinalBooking({...booking});            
+                bookingInfos.seats.push(index + 1);
+            }
+            else alert("Esse assento não está disponível");
+        }        
         setConfirmedBooking({...bookingInfos});
     }
 
