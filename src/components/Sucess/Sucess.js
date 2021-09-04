@@ -1,28 +1,29 @@
 import "../Sucess/Sucess.css"
 
 export default function Sucess(props){
-console.log(props)
+    const {
+        movie,
+        buyer,
+        session, 
+        seats
+    } = props.confirmedBooking;
     
     return(
         <div className="Sucess">
             <h2>Pedido feito com sucesso!</h2>
-            <div>
-                <h3>Filme e sessão</h3>
-                <p>Enola Holmes</p>
-                <p>24/06/2021 15:00</p>
-            </div>
-
-            <div>
-                <h3>Ingressos</h3>
-                <p>Assento 15</p>
-                <p>Assento 16</p>
-            </div>
-
-            <div>
-                <h3>Comprador</h3>
-                <p>Nome: Yasmim</p>
-                <p>CPF: 123.456.789-00</p>
-            </div>
+            
+            <h3>Filme e sessão</h3>
+            <p>{movie.title}</p>
+            <p>{session.day.weekday} {session.time}</p>
+            
+            <h3>Ingressos</h3>
+            {seats.map(seat=>(
+                <p>Assento {seat}</p>
+            ))}     
+            
+            <h3>Comprador</h3>
+            <p>Nome: {buyer.name}</p>
+            <p>CPF: {buyer.cpf}</p>
 
             <button className="home">
                 Voltar pra Home

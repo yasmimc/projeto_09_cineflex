@@ -12,10 +12,17 @@ import Sucess from "../Sucess/Sucess";
 
 export default function App() {   
 
-    const [finalBooking, setFinalBooking] = useState({
-        ids: [],
-        name: "",
-        cpf: ""
+    const [confirmedBooking, setConfirmedBooking] = useState({
+        movie: "",
+        session: {
+            day: "",
+            time: ""
+        },
+        seats: [],
+        buyer:{
+            name: "",
+            cpf: ""
+        }
     });
 
     return (
@@ -23,12 +30,12 @@ export default function App() {
             <Header></Header>
             <Switch>
                 <Route path="/" exact component={Movies}/>
-                <Route path="/filme/:idMovie" exact component= {Sessions}/>
+                <Route path="/filme/:idMovie" exact component={Sessions}/>
                 <Route path="/filme/assentos/:idSession" exact>
-                    <SessionSeats finalBooking={finalBooking} setFinalBooking = {setFinalBooking}/>
+                    <SessionSeats confirmedBooking={confirmedBooking} setConfirmedBooking={setConfirmedBooking}/>
                 </Route>
                 <Route path="/filme/sessao/:idSession/sucesso" exact>
-                    <Sucess finalBooking={finalBooking} teste={""}/>
+                    <Sucess confirmedBooking={confirmedBooking}/>
                 </Route>
             </Switch>
         </BrowserRouter>

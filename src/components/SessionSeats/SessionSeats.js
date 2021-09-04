@@ -12,9 +12,15 @@ const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cinefle
 export default function SessionSeats(props) {
 
     const { 
-        finalBooking, 
-        setFinalBooking 
+        confirmedBooking, 
+        setConfirmedBooking 
     } = props;
+
+    const [finalBooking, setFinalBooking] = useState({
+        ids: [],
+        name: "",
+        cpf: ""
+    });
 
     const params = useParams();
     const { idSession } = params;
@@ -29,8 +35,24 @@ export default function SessionSeats(props) {
 
     const booking = {...finalBooking};
 
-    function book(){
+    function saveName(name){
+        booking.name = name; 
         setFinalBooking({...booking});
+    }
+
+    function saveCPF(cpf){
+        booking.cpf = cpf; 
+        setFinalBooking({...booking});
+    }
+
+    function book(){
+        const bookingInfos = {...confirmedBooking};
+        bookingInfos.movie = session.movie;
+        bookingInfos.session.day = session.day;
+        bookingInfos.session.time = session.name;
+        bookingInfos.buyer.name = finalBooking.name;
+        bookingInfos.buyer.cpf = finalBooking.cpf;
+        setConfirmedBooking({...bookingInfos});
         // axios.post(`${API_CINEFLEX}/seats/book-many`, finalBooking);
     }
     
@@ -45,6 +67,8 @@ export default function SessionSeats(props) {
                         index = {index}
                         finalBooking = {finalBooking}
                         setFinalBooking = {setFinalBooking}
+                        confirmedBooking = {confirmedBooking} 
+                        setConfirmedBooking = {setConfirmedBooking}
                    />
                )) : "Carregando assentos..."}
             </div>
@@ -66,9 +90,9 @@ export default function SessionSeats(props) {
 
             <Forms>
                 <h3>Nome do comprador:</h3>
-                <input onChange={(e)=>{booking.name = e.target.value}} type="text" placeholder="Digite seu nome..." ></input>
+                <input onChange={(e)=>{saveName(e.target.value)}} type="text" placeholder="Digite seu nome..." ></input>
                 <h3>CPF do comprador:</h3>
-                <input onChange={(e)=>{booking.cpf = e.target.value}} type="number" placeholder="Digite seu CPF..." ></input>
+                <input onChange={(e)=>{saveCPF(e.target.value)}} type="number" placeholder="Digite seu CPF..." ></input>
             </Forms>
 
             <Link to={booking.name && booking.cpf && booking.ids.length > 0 ? `/filme/sessao/${idSession}/sucesso` : `/filme/assentos/${idSession}`}>
@@ -91,7 +115,9 @@ function Seat(props){
         seat,
         index,
         finalBooking,
-        setFinalBooking
+        setFinalBooking,
+        confirmedBooking,
+        setConfirmedBooking
     } = props;
 
     const [isSelected, setIsSelected] = useState(false);
@@ -106,6 +132,10 @@ function Seat(props){
         }
         else alert("Esse assento não está disponível");
         if(isSelected) setIsSelected(false);
+
+        const bookingInfos = {...confirmedBooking};
+        bookingInfos.seats.push(index + 1);
+        setConfirmedBooking({...bookingInfos});
     }
 
     return(
