@@ -31,6 +31,7 @@ export default function SessionSeats(props) {
 
     function book(){
         setFinalBooking({...booking});
+        // axios.post(`${API_CINEFLEX}/seats/book-many`, finalBooking);
     }
     
     return (
@@ -70,7 +71,7 @@ export default function SessionSeats(props) {
                 <input onChange={(e)=>{booking.cpf = e.target.value}} type="number" placeholder="Digite seu CPF..." ></input>
             </Forms>
 
-            <Link to={booking.name && booking.cpf && booking.ids.length > 0 ? "/filme/sessao/:idSessao/sucesso" : `/filme/assentos/${idSession}`}>
+            <Link to={booking.name && booking.cpf && booking.ids.length > 0 ? `/filme/sessao/${idSession}/sucesso` : `/filme/assentos/${idSession}`}>
                 <button onClick={book} className="submit">
                     Reservar assento(s)
                 </button>

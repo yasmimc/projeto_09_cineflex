@@ -1,6 +1,8 @@
 import "../Sucess/Sucess.css"
 
-export default function Sucess(){
+export default function Sucess(props){
+console.log(props)
+    
     return(
         <div className="Sucess">
             <h2>Pedido feito com sucesso!</h2>

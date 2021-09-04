@@ -28,7 +28,7 @@ export default function App() {
                     <SessionSeats finalBooking={finalBooking} setFinalBooking = {setFinalBooking}/>
                 </Route>
                 <Route path="/filme/sessao/:idSession/sucesso" exact>
-                    <Sucess finalBooking={finalBooking} setFinalBooking = {setFinalBooking}/>
+                    <Sucess finalBooking={finalBooking} teste={""}/>
                 </Route>
             </Switch>
         </BrowserRouter>
