@@ -22,8 +22,6 @@ export default function Sessions() {
         promise.then((resp) => setMovieSessions({...resp.data}))
     }, []);
 
-    console.log(movieSessions)
-
     return (
         <div className="Sessions">
             <h2>Selecione o horário</h2>

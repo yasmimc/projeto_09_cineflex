@@ -1,15 +1,11 @@
 
-import { Link } from "react-router-dom"
-import "./SessionSeats.css"
-import Footer from "../Footer/Footer";
-
-import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom"
+
 import axios from 'axios';
 
-
-import "../Sessions/Sessions.css"
-
+import { Container, Labels, Buttom, Forms } from "./Style.js"
+import Footer from "../Footer/Footer";
 
 const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex"
 
@@ -24,12 +20,10 @@ export default function SessionSeats() {
 
     useEffect(()=>(
         promise.then((resp)=>setSession({...resp.data}))
-    ), [])
-
-    console.log(session)
+    ), []);
     
     return (
-        <div className="SessionSeats">
+        <Container>
             <h2>Selecione o(s) assento(s)</h2>
             <div>
                {session.seats ? session.seats.map((seat, index)=>(
@@ -41,7 +35,7 @@ export default function SessionSeats() {
                )) : "Carregando assentos..."}
             </div>
 
-            <ul className="labels">
+            <Labels>
                 <li>
                     <div className="circle selected"></div>
                     <p>Selecionado</p>
@@ -54,14 +48,14 @@ export default function SessionSeats() {
                     <div className="circle unavailable"></div>
                     <p>Indisponível</p>
                 </li>
-            </ul>
+            </Labels>
 
-            <div className="form">
+            <Forms>
                 <h3>Nome do comprador:</h3>
                 <input type="text" placeholder="Digite seu nome..." ></input>
                 <h3>CPF do comprador:</h3>
                 <input type="number" placeholder="Digite seu CPF..." ></input>
-            </div>
+            </Forms>
 
             <Link to="/filme/sessao/:idSessao/sucesso">
                 <button className="submit">
@@ -74,8 +68,7 @@ export default function SessionSeats() {
                 day = {session.day}
                 time = {session.name}
             />
-
-        </div>
+        </Container>
     );
 }
 
@@ -84,9 +77,20 @@ function Seat(props){
         seat,
         index
     } = props;
+
+    const [isSelected, setIsSelected] = useState(false);
+
+    function select(){
+        if(seat.isAvailable) setIsSelected(true);
+    }
+
     return(
-        <button className={seat.isAvailable ? "available" : "unavailable"}>
+        <Buttom
+        isAvailable = {seat.isAvailable}
+        onClick={select} 
+        isSelected = {isSelected}
+        >
             {index + 1}
-        </button>
-    )
+        </Buttom>
+    );
 }
