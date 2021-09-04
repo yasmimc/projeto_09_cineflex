@@ -12,24 +12,25 @@ import Sucess from "../Sucess/Sucess";
 
 export default function App() {   
 
+    const [finalBooking, setFinalBooking] = useState({
+        ids: [],
+        name: "",
+        cpf: ""
+    });
+
     return (
         <BrowserRouter>
             <Header></Header>
             <Switch>
-                <Route path="/" exact>
-                    <Movies></Movies>
-                </Route>
-                <Route path="/filme/:idMovie" exact>
-                    <Sessions></Sessions>                    
-                </Route>
+                <Route path="/" exact component={Movies}/>
+                <Route path="/filme/:idMovie" exact component= {Sessions}/>
                 <Route path="/filme/assentos/:idSession" exact>
-                    <SessionSeats></SessionSeats>
+                    <SessionSeats finalBooking={finalBooking} setFinalBooking = {setFinalBooking}/>
                 </Route>
                 <Route path="/filme/sessao/:idSession/sucesso" exact>
-                    <Sucess></Sucess>
+                    <Sucess finalBooking={finalBooking} setFinalBooking = {setFinalBooking}/>
                 </Route>
             </Switch>
         </BrowserRouter>
     );
 }
-

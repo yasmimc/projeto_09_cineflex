@@ -9,7 +9,14 @@ import Footer from "../Footer/Footer";
 
 const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex"
 
-export default function SessionSeats() {
+export default function SessionSeats(props) {
+
+    const { 
+        finalBooking, 
+        setFinalBooking 
+    } = props;
+    console.log(finalBooking)
+
 
     const params = useParams();
     const { idSession } = params;
@@ -31,6 +38,8 @@ export default function SessionSeats() {
                         key = {seat.id}
                         seat = {seat} 
                         index = {index}
+                        finalBooking = {finalBooking}
+                        setFinalBooking = {setFinalBooking}
                    />
                )) : "Carregando assentos..."}
             </div>
@@ -75,13 +84,23 @@ export default function SessionSeats() {
 function Seat(props){
     const {
         seat,
-        index
+        index,
+        finalBooking,
+        setFinalBooking
     } = props;
+
 
     const [isSelected, setIsSelected] = useState(false);
 
+    const booking = {...finalBooking};
+
     function select(){
-        if(seat.isAvailable) setIsSelected(true);
+        if(seat.isAvailable) {
+            console.log(finalBooking.ids)
+            setIsSelected(true);
+            booking.ids.push(seat.id);
+            setFinalBooking({...booking});
+        }
         else alert("Esse assento não está disponível");
         if(isSelected) setIsSelected(false);
     }
