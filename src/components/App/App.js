@@ -22,8 +22,12 @@ export default function App() {
         buyer:{
             name: "",
             cpf: ""
-        }
+        },
+        isConfirmed: false
     });
+
+    console.log("to renderizando")
+
 
     // console.log(confirmedBooking.seats.length > 0)
     

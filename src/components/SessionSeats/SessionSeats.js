@@ -21,11 +21,27 @@ export default function SessionSeats(props) {
         setConfirmedBooking 
     } = props;
 
-    const [confirmedBookinReq, setConfirmedBookinReq] = useState({
+    if(confirmedBooking.isConfirmed){
+        setConfirmedBooking({
+            movie: "",
+            session: {
+                day: "",
+                time: ""
+            },
+            seats: [],
+            buyer:{
+                name: "",
+                cpf: ""
+            },
+            isConfirmed: false
+        });
+    }
+
+    const [confirmedBookingReq, setConfirmedBookingReq] = useState({
         ids: [],
         name: "",
         cpf: ""
-    });    
+    });
 
     const promise = axios.get(`${API_CINEFLEX}/showtimes/${idSession}/seats`);
 
@@ -33,16 +49,16 @@ export default function SessionSeats(props) {
         promise.then((resp)=>setSession({...resp.data}))
     ), []);
 
-    const tmpConfirmedBookinReq = {...confirmedBookinReq};
+    const tmpConfirmedBookingReq = {...confirmedBookingReq};
 
     function saveName(name){
-        tmpConfirmedBookinReq.name = name; 
-        setConfirmedBookinReq({...tmpConfirmedBookinReq});
+        tmpConfirmedBookingReq.name = name; 
+        setConfirmedBookingReq({...tmpConfirmedBookingReq});
     }
 
     function saveCPF(cpf){
-        tmpConfirmedBookinReq.cpf = cpf; 
-        setConfirmedBookinReq({...tmpConfirmedBookinReq});
+        tmpConfirmedBookingReq.cpf = cpf; 
+        setConfirmedBookingReq({...tmpConfirmedBookingReq});
     }
 
     function book(){
@@ -50,10 +66,11 @@ export default function SessionSeats(props) {
         tmpConfirmedBooking.movie = session.movie;
         tmpConfirmedBooking.session.day = session.day;
         tmpConfirmedBooking.session.time = session.name;
-        tmpConfirmedBooking.buyer.name = confirmedBookinReq.name;
-        tmpConfirmedBooking.buyer.cpf = confirmedBookinReq.cpf;
+        tmpConfirmedBooking.buyer.name = confirmedBookingReq.name;
+        tmpConfirmedBooking.buyer.cpf = confirmedBookingReq.cpf;
+        tmpConfirmedBooking.isConfirmed = true;
         setConfirmedBooking({...tmpConfirmedBooking});
-        // axios.post(`${API_CINEFLEX}/seats/book-many`, confirmedBookinReq);
+        // axios.post(`${API_CINEFLEX}/seats/book-many`, confirmedBookingReq);
     }
     
     return (
@@ -65,8 +82,8 @@ export default function SessionSeats(props) {
                         key = {seat.id}
                         seat = {seat} 
                         index = {index}
-                        confirmedBookinReq = {confirmedBookinReq}
-                        setConfirmedBookinReq = {setConfirmedBookinReq}
+                        confirmedBookingReq = {confirmedBookingReq}
+                        setConfirmedBookingReq = {setConfirmedBookingReq}
                         confirmedBooking = {confirmedBooking} 
                         setConfirmedBooking = {setConfirmedBooking}
                    />
@@ -95,7 +112,7 @@ export default function SessionSeats(props) {
                 <input onChange={(e)=>{saveCPF(e.target.value)}} type="number" placeholder="Digite seu CPF..." ></input>
             </Forms>
 
-            <Link to={tmpConfirmedBookinReq.name && tmpConfirmedBookinReq.cpf && tmpConfirmedBookinReq.ids.length > 0 ? `/filme/sessao/${idSession}/sucesso` : `/filme/assentos/${idSession}`}>
+            <Link to={tmpConfirmedBookingReq.name && tmpConfirmedBookingReq.cpf && tmpConfirmedBookingReq.ids.length > 0 ? `/filme/sessao/${idSession}/sucesso` : `/filme/assentos/${idSession}`}>
                 <button onClick={book} className="submit">
                     Reservar assento(s)
                 </button>
@@ -114,15 +131,15 @@ function Seat(props){
     const {
         seat,
         index,
-        confirmedBookinReq,
-        setConfirmedBookinReq,
+        confirmedBookingReq,
+        setConfirmedBookingReq,
         confirmedBooking,
         setConfirmedBooking
     } = props;
 
     const [isSelected, setIsSelected] = useState(false);
 
-    const tmpConfirmedBookinReq = {...confirmedBookinReq};
+    const tmpConfirmedBookingReq = {...confirmedBookingReq};
 
     function unselect(seatNumber, seatsList){
         setIsSelected(false);
@@ -137,8 +154,8 @@ function Seat(props){
         else{
             if(seat.isAvailable) {
                 setIsSelected(true);
-                tmpConfirmedBookinReq.ids.push(seat.id);
-                setConfirmedBookinReq({...tmpConfirmedBookinReq});            
+                tmpConfirmedBookingReq.ids.push(seat.id);
+                setConfirmedBookingReq({...tmpConfirmedBookingReq});            
                 tmpConfirmedBooking.seats.push(index + 1);
             }
             else alert("Esse assento não está disponível");
