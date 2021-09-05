@@ -25,6 +25,9 @@ export default function App() {
         }
     });
 
+    // console.log(confirmedBooking.seats.length > 0)
+    
+
     return (
         <BrowserRouter>
             <Header></Header>
@@ -35,7 +38,7 @@ export default function App() {
                     <SessionSeats confirmedBooking={confirmedBooking} setConfirmedBooking={setConfirmedBooking}/>
                 </Route>
                 <Route path="/filme/sessao/:idSession/sucesso" exact>
-                    <Sucess confirmedBooking={confirmedBooking}/>
+                    <Sucess confirmedBooking={confirmedBooking} setConfirmedBooking = {setConfirmedBooking}/>
                 </Route>
             </Switch>
         </BrowserRouter>
