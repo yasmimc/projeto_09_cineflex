@@ -145,7 +145,8 @@ function Seat(props){
         setIsSelected(false);
 
         const indexUnselectedSeat = seatsList.indexOf(seatsList.find((seat) => seat === seatNumber));
-        seatsList.splice(indexUnselectedSeat, 1);        
+        seatsList.splice(indexUnselectedSeat, 1);
+        tmpConfirmedBookingReq.ids.splice(indexUnselectedSeat, 1);  
     }
 
     function select(){
