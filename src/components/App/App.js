@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import "../../reset.css";
@@ -24,13 +24,7 @@ export default function App() {
             cpf: ""
         },
         isConfirmed: false
-    });
-
-    console.log("to renderizando")
-
-
-    // console.log(confirmedBooking.seats.length > 0)
-    
+    });    
 
     return (
         <BrowserRouter>
