@@ -5,7 +5,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 170px;
+    margin-bottom: 150px;
     
 `
 const Seats = styled.div`
