@@ -4,7 +4,8 @@ const Container = styled.div`
 
     display: flex;
     flex-direction: column;
-    align-items: center;     
+    align-items: center;
+    margin-bottom: 170px;
 `
 const SubmitButton = styled.button`
 

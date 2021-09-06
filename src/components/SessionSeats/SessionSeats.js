@@ -82,7 +82,7 @@ export default function SessionSeats(props) {
     
     const scrollBehavior = {
         behavior: "smooth",
-        block: "center"
+        block: "start"
     }
 
     return (
