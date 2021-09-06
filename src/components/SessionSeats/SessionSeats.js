@@ -68,7 +68,7 @@ export default function SessionSeats(props) {
         tmpConfirmedBooking.session.time = session.name;
         tmpConfirmedBooking.isConfirmed = true;
         setConfirmedBooking({...tmpConfirmedBooking});
-        // axios.post(`${API_CINEFLEX}/seats/book-many`, confirmedBookingReq);
+        axios.post(`${API_CINEFLEX}/seats/book-many`, confirmedBookingReq);
     }
 
     function canBook(){
