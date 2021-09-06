@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../Sucess/Sucess.css"
+import styled from "styled-components";
 
 export default function Sucess(props) {
     const {
@@ -9,7 +9,7 @@ export default function Sucess(props) {
     } = props.confirmedBooking;
 
     return (
-        <div className="Sucess">
+        <SucessContainer>
             <h2>Pedido feito com sucesso!</h2>
             <h3>Filme e sessão</h3>
             <p>{movie.title}</p>
@@ -30,6 +30,45 @@ export default function Sucess(props) {
                     Voltar pra Home
                 </button>
             </Link>
-        </div>
+        </SucessContainer>
     );
 }
+
+const SucessContainer = styled.div`
+    h2 {
+        padding: 0 100px;
+        color: #247A6B;
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 24px;
+        color: #293845;
+        font-size: 24px;
+        margin-top: 40px;
+    }
+
+    p {
+        font-size: 22px;
+        color: #293845
+    }
+
+    button {
+        width: 225px;
+        height: 42px;
+        top: 688px;
+
+        background: #E8833A;
+        border-radius: 3px;
+        border: none;
+
+        font-size: 18px;
+        color: #FFFFFF;
+
+        position: fixed;
+        
+        left: calc((100vw - 225px)/2);
+    }
+    `

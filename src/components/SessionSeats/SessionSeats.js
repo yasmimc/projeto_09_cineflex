@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import axios from 'axios';
 
-import { Container, Labels, Buttom, Forms } from "./Style.js"
+import { Container, SubmitButton, Labels, SelectedSeat, AvailableSeat, UnavailableSeat, Buttom, Forms } from "./Style.js"
 import Footer from "../Footer/Footer";
 
 const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex"
@@ -100,15 +100,15 @@ export default function SessionSeats(props) {
 
             <Labels>
                 <li>
-                    <div className="circle selected"></div>
+                    <SelectedSeat/>
                     <p>Selecionado</p>
                 </li>
                 <li>
-                    <div className="circle available"></div>
+                    <AvailableSeat />
                     <p>Disponível</p>
                 </li>
                 <li>
-                    <div className="circle unavailable"></div>
+                    <UnavailableSeat/>
                     <p>Indisponível</p>
                 </li>
             </Labels>
@@ -125,9 +125,9 @@ export default function SessionSeats(props) {
 
             {canBook() ? 
             <Link to={"/filme/sessao/${idSession}/sucesso"}>
-                <button onClick={book} className="submit">
+                <SubmitButton onClick={book}>
                     Reservar assento(s)
-                </button> 
+                </SubmitButton> 
             </Link>
             : ""}
 

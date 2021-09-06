@@ -1,12 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 
-
-import "../Sessions/Sessions.css"
-
 import Footer from "../Footer/Footer"
+import styled from 'styled-components';
 
 const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex"
 
@@ -23,7 +21,7 @@ export default function Sessions() {
     }, []);
 
     return (
-        <div className="Sessions">
+        <SessionsContainer>
             <h2>Selecione o horário</h2>
             <ul>
                 {movieSessions.days ? movieSessions.days.map((session) => (
@@ -34,7 +32,7 @@ export default function Sessions() {
                 )) : ""}
             </ul>
             <Footer movie = {movieSessions}/>
-        </div>
+        </SessionsContainer>
     );
 }
 
@@ -51,3 +49,26 @@ function Session(props) {
         </li>
     );
 }
+
+const SessionsContainer = styled.div`
+    ul {
+        margin-top: 40px;
+    }
+
+    li p{
+        font-size: 20px;    
+    }
+
+    li button {
+        background-color: #E8833A;
+        border: none;
+        border-radius: 3px;
+        width: 83px;
+        height: 43px;
+
+        color: #FFFFFF;
+        font-size: 18px;
+
+        margin: 22px 4px;
+    }
+`
