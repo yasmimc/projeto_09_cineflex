@@ -124,7 +124,7 @@ export default function SessionSeats(props) {
             )) : ""}
 
             {canBook() ? 
-            <Link to={"/filme/sessao/${idSession}/sucesso"}>
+            <Link to={`/filme/sessao/${idSession}/sucesso`}>
                 <SubmitButton onClick={book}>
                     Reservar assento(s)
                 </SubmitButton> 

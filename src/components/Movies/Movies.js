@@ -39,7 +39,7 @@ function Movie(props) {
     return (
         <Link to={`/filme/${idFilme}`}>
             <Poster>
-                <img src={posterURl}></img>
+                <img alt= "" src={posterURl}></img>
             </Poster>
         </Link>        
     );

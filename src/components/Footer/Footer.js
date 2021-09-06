@@ -10,7 +10,7 @@ export default function Footer(props){
     return(
         <SelectedMovie>
             <Banner>
-                <img src={movie ? movie.posterURL : ""}></img>
+                <img alt= {movie ? movie.title: ""} src={movie ? movie.posterURL : ""}></img>
             </Banner>
             <div>
                 <p>{movie ? movie.title : ""}</p>
