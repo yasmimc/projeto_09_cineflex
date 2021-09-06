@@ -74,12 +74,15 @@ export default function SessionSeats(props) {
             comprador => (!comprador.idAseento || !comprador.nome || ! comprador.cpf)
         );
 
-        if (confirmedBookingReq.ids.length === 0 || invalidInputs.length > 0){
-            return false;
-        }
+        if (confirmedBookingReq.ids.length === 0 || invalidInputs.length > 0) return false;
         else return true;
     }
     
+    const scrollBehavior = {
+        behavior: "smooth",
+        block: "center"
+    }
+
     return (
         <Container>
             <h2>Selecione o(s) assento(s)</h2>
@@ -116,9 +119,17 @@ export default function SessionSeats(props) {
                 <Forms>
                     <h3>Assento {buyer.seat}</h3>
                     <h4>Nome do comprador:</h4>
-                    <input onChange={(e)=>{saveName(e.target.value, index)}} type="text" placeholder="Digite seu nome..." ></input>
+                    <input 
+                        onChange={(e)=>{saveName(e.target.value, index)}} 
+                        onFocus={(e)=>(e.target.scrollIntoView(scrollBehavior))}
+                        type="text" placeholder="Digite seu nome..."                        
+                    />
                     <h4>CPF do comprador:</h4>
-                    <input onChange={(e)=>{saveCPF(e.target.value, index)}} type="number" placeholder="Digite seu CPF..." ></input>
+                    <input 
+                        onChange={(e)=>{saveCPF(e.target.value, index)}}
+                        onFocus={(e)=>(e.target.scrollIntoView(scrollBehavior))}
+                        type="number" placeholder="Digite seu CPF..." 
+                    />
                 </Forms>
             )) : ""}
 

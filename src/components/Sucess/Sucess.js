@@ -15,13 +15,11 @@ export default function Sucess(props) {
             <p>{movie.title}</p>
             <p>{session.day.weekday} {session.time}</p>
 
-            {buyers.map((buyer, index)=>(
+            {buyers.map((buyer)=>(
                 <>
-                    <h3>Ingresso {index + 1}</h3>                
+                    <h3>Assento {buyer.seat}</h3>                
                     <p>Comprador: {buyer.name}</p>
                     <p>CPF: {buyer.cpf}</p>
-                    <p>Assento: {buyer.seat}</p>
-
                 </>
             ))}
 
