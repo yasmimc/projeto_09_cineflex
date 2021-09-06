@@ -36,10 +36,10 @@ export default function Sucess(props) {
 
 const SucessContainer = styled.div`
     h2 {
-        padding: 0 100px;
+        padding: 40px 100px 0;
         color: #247A6B;
         font-weight: bold;
-        font-size: 24px;
+        font-size: 24px;        
     }
 
     h3 {

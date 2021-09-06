@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import axios from 'axios';
@@ -115,10 +114,10 @@ export default function SessionSeats(props) {
 
             {confirmedBooking.buyers.length > 0 ? confirmedBooking.buyers.map((buyer, index)=>(
                 <Forms>
-                    <h2>Assento {buyer.seat}</h2>
-                    <h3>Nome do comprador:</h3>
+                    <h3>Assento {buyer.seat}</h3>
+                    <h4>Nome do comprador:</h4>
                     <input onChange={(e)=>{saveName(e.target.value, index)}} type="text" placeholder="Digite seu nome..." ></input>
-                    <h3>CPF do comprador:</h3>
+                    <h4>CPF do comprador:</h4>
                     <input onChange={(e)=>{saveCPF(e.target.value, index)}} type="number" placeholder="Digite seu CPF..." ></input>
                 </Forms>
             )) : ""}

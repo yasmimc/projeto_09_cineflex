@@ -19,6 +19,8 @@ const SubmitButton = styled.button`
 
     font-size: 18px;
     color: #FFFFFF;
+
+    margin-bottom: 10px;
 `
 
 const Labels = styled.ul`
@@ -73,6 +75,12 @@ const Forms = styled.div`
     width: calc(100vw - 60px);
     margin: 0 ;
     margin-top: 30px;
+
+    h3 {
+        font-weight: bold;
+        font-size: larger;
+        margin-bottom: 10px;
+    }
 
     p {
         font-size: 18px;

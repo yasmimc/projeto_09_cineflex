@@ -14,9 +14,9 @@ export default function Movies() {
     }, []);
 
     return (
-        <div >
+        <MoviesContainer>
             <h2>Selecione o filme</h2>
-            <MoviesContainer>
+            <MoviesList>
                 {moviesList.map((movie)=>(
                     <Movie 
                         key={movie.id}
@@ -24,8 +24,8 @@ export default function Movies() {
                         posterURl={movie.posterURL}    
                     />
                 ))}             
-            </MoviesContainer>
-        </div>
+            </MoviesList>
+        </MoviesContainer>
     );
 }
 
@@ -46,6 +46,12 @@ function Movie(props) {
 }
 
 const MoviesContainer = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+`
+
+const MoviesList = styled.div`
 
     display: flex;
     justify-content: space-around;
@@ -53,6 +59,7 @@ const MoviesContainer = styled.div`
     flex-wrap: wrap;
 
     margin-top: 20px;
+    
 `
 
 const Poster = styled.div`
