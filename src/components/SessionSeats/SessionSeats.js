@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import axios from 'axios';
 
-import { Container, SubmitButton, Labels, SelectedSeat, AvailableSeat, UnavailableSeat, Buttom, Forms } from "./Style.js"
+import { Container, Seats, SubmitButton, Labels, SelectedSeat, AvailableSeat, UnavailableSeat, Buttom, Forms } from "./Style.js"
 import Footer from "../Footer/Footer";
 
 const API_CINEFLEX = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex"
@@ -88,7 +88,7 @@ export default function SessionSeats(props) {
     return (
         <Container>
             <h2>Selecione o(s) assento(s)</h2>
-            <div>
+            <Seats>
                {session.seats ? session.seats.map((seat, index)=>(
                    <Seat 
                         key = {seat.id}
@@ -100,7 +100,7 @@ export default function SessionSeats(props) {
                         setConfirmedBooking = {setConfirmedBooking}
                    />
                )) : "Carregando assentos..."}
-            </div>
+            </Seats>
 
             <Labels>
                 <li>

@@ -6,7 +6,14 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     margin-bottom: 170px;
+    
 `
+const Seats = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+`
+
 const SubmitButton = styled.button`
 
     width: 225px;
@@ -105,6 +112,7 @@ const Forms = styled.div`
 
 export {
     Container,
+    Seats,
     SubmitButton,
     Labels,
     SelectedSeat,
