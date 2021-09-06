@@ -20,22 +20,24 @@ export default function SessionSeats(props) {
         setConfirmedBooking 
     } = props;
 
-    if(confirmedBooking.isConfirmed){
-        setConfirmedBooking({
-            movie: "",
-            session: {
-                day: "",
-                time: ""
-            },
-            buyers:[],
-            isConfirmed: false
-        });
-    }
-
     const [confirmedBookingReq, setConfirmedBookingReq] = useState({
         ids: [],
         compradores: []
     });
+
+   useEffect(()=>{
+        if(confirmedBooking.isConfirmed || confirmedBookingReq.ids.length === 0){
+            setConfirmedBooking({
+                movie: "",
+                session: {
+                    day: "",
+                    time: ""
+                },
+                buyers:[],
+                isConfirmed: false
+            });
+        }
+   }, [])
 
     const promise = axios.get(`${API_CINEFLEX}/showtimes/${idSession}/seats`);
 
