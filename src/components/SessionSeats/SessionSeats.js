@@ -33,15 +33,21 @@ export default function SessionSeats(props) {
                 name: "",
                 cpf: ""
             },
+            buyers:[],
             isConfirmed: false
         });
     }
 
+    // console.log(confirmedBooking);
+
     const [confirmedBookingReq, setConfirmedBookingReq] = useState({
         ids: [],
         name: "",
-        cpf: ""
+        cpf: "", 
+        compradores: []
     });
+
+    // console.log(confirmedBookingReq);
 
     const promise = axios.get(`${API_CINEFLEX}/showtimes/${idSession}/seats`);
 
@@ -141,23 +147,43 @@ function Seat(props){
 
     const tmpConfirmedBookingReq = {...confirmedBookingReq};
 
-    function unselect(seatNumber, seatsList){
+    function unselect(seatNumber, booking){
         setIsSelected(false);
 
-        const indexUnselectedSeat = seatsList.indexOf(seatsList.find((seat) => seat === seatNumber));
-        seatsList.splice(indexUnselectedSeat, 1);
-        tmpConfirmedBookingReq.ids.splice(indexUnselectedSeat, 1);  
+        const indexUnselectedSeat = booking.seats.indexOf(booking.seats.find((seat) => seat === seatNumber));
+
+        booking.seats.splice(indexUnselectedSeat, 1);
+        booking.buyers.splice(indexUnselectedSeat, 1);
+
+        tmpConfirmedBookingReq.ids.splice(indexUnselectedSeat, 1);
+        tmpConfirmedBookingReq.compradores.splice(indexUnselectedSeat, 1);
     }
 
     function select(){
         const tmpConfirmedBooking = {...confirmedBooking};
-        if(isSelected) unselect(index+1, tmpConfirmedBooking.seats);
+        // console.log(tmpConfirmedBooking)
+        
+        if(isSelected) unselect(index+1, tmpConfirmedBooking);
         else{
             if(seat.isAvailable) {
+                tmpConfirmedBooking.buyers.push({
+                    name: "",
+                    cpf: "",
+                    seat: ""
+                })
                 setIsSelected(true);
                 tmpConfirmedBookingReq.ids.push(seat.id);
+                tmpConfirmedBookingReq.compradores.push({
+                    idAseento: seat.id,
+                    nome: "",
+                    cpf: ""
+                })
+                console.log(tmpConfirmedBookingReq)
                 setConfirmedBookingReq({...tmpConfirmedBookingReq});            
                 tmpConfirmedBooking.seats.push(index + 1);
+                const lastAddedSeat = tmpConfirmedBooking.buyers.length-1;
+                tmpConfirmedBooking.buyers[lastAddedSeat].seat = index + 1;
+                console.log(tmpConfirmedBooking)
             }
             else alert("Esse assento não está disponível");
         }        

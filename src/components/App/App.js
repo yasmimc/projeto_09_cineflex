@@ -23,6 +23,7 @@ export default function App() {
             name: "",
             cpf: ""
         },
+        buyers:[],
         isConfirmed: false
     });    
 
