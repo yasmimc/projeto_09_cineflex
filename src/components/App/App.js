@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
 
 import "../../reset.css";
 import "../App/App.css";
@@ -10,7 +10,7 @@ import Sessions from "../Sessions/Sessions";
 import SessionSeats from "../SessionSeats/SessionSeats";
 import Sucess from "../Sucess/Sucess";
 
-export default function App() {   
+export default function App() {  
 
     const [confirmedBooking, setConfirmedBooking] = useState({
         movie: "",

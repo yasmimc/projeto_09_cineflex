@@ -1,14 +1,17 @@
 import styled from "styled-components";
 import {MdKeyboardBackspace} from 'react-icons/md';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 export default function Header(){
     let history = useHistory();
+    const location = useLocation();
     return(
         <Container>
-            <button onClick={()=>history.goBack()}>
-                <MdKeyboardBackspace/>
-            </button>
+            {location.pathname !== "/" ?
+                <button onClick={()=>history.goBack()}>
+                    <MdKeyboardBackspace/>
+                </button>
+            : ""}
 
             <Link to ="/">
                 <h1>CINEFLEX</h1>

@@ -9,9 +9,6 @@ export default function Sucess(props) {
         seats
     } = props.confirmedBooking;
 
-    console.log(props.confirmedBooking)
-
-
     return (
         <div className="Sucess">
             <h2>Pedido feito com sucesso!</h2>
