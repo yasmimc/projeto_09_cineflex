@@ -28,19 +28,14 @@ export default function SessionSeats(props) {
                 day: "",
                 time: ""
             },
-            seats: [],
-            buyer:{
-                name: "",
-                cpf: ""
-            },
+            buyers:[],
             isConfirmed: false
         });
     }
 
     const [confirmedBookingReq, setConfirmedBookingReq] = useState({
         ids: [],
-        name: "",
-        cpf: ""
+        compradores: []
     });
 
     const promise = axios.get(`${API_CINEFLEX}/showtimes/${idSession}/seats`);
@@ -50,27 +45,40 @@ export default function SessionSeats(props) {
     ), []);
 
     const tmpConfirmedBookingReq = {...confirmedBookingReq};
+    const tmpConfirmedBooking = {...confirmedBooking};
 
-    function saveName(name){
-        tmpConfirmedBookingReq.name = name; 
+    function saveName(name, index){
+        tmpConfirmedBookingReq.compradores[index].nome = name;
         setConfirmedBookingReq({...tmpConfirmedBookingReq});
+
+        tmpConfirmedBooking.buyers[index].name = name;
     }
 
-    function saveCPF(cpf){
-        tmpConfirmedBookingReq.cpf = cpf; 
+    function saveCPF(cpf, index){
+        tmpConfirmedBookingReq.compradores[index].cpf = cpf;
         setConfirmedBookingReq({...tmpConfirmedBookingReq});
+
+        tmpConfirmedBooking.buyers[index].cpf = cpf;
     }
 
     function book(){
-        const tmpConfirmedBooking = {...confirmedBooking};
         tmpConfirmedBooking.movie = session.movie;
         tmpConfirmedBooking.session.day = session.day;
         tmpConfirmedBooking.session.time = session.name;
-        tmpConfirmedBooking.buyer.name = confirmedBookingReq.name;
-        tmpConfirmedBooking.buyer.cpf = confirmedBookingReq.cpf;
         tmpConfirmedBooking.isConfirmed = true;
         setConfirmedBooking({...tmpConfirmedBooking});
         // axios.post(`${API_CINEFLEX}/seats/book-many`, confirmedBookingReq);
+    }
+
+    function canBook(){
+        const invalidInputs = confirmedBookingReq.compradores.filter(
+            comprador => (!comprador.idAseento || !comprador.nome || ! comprador.cpf)
+        );
+
+        if (confirmedBookingReq.ids.length === 0 || invalidInputs.length > 0){
+            return false;
+        }
+        else return true;
     }
     
     return (
@@ -105,18 +113,23 @@ export default function SessionSeats(props) {
                 </li>
             </Labels>
 
-            <Forms>
-                <h3>Nome do comprador:</h3>
-                <input onChange={(e)=>{saveName(e.target.value)}} type="text" placeholder="Digite seu nome..." ></input>
-                <h3>CPF do comprador:</h3>
-                <input onChange={(e)=>{saveCPF(e.target.value)}} type="number" placeholder="Digite seu CPF..." ></input>
-            </Forms>
+            {confirmedBooking.buyers.length > 0 ? confirmedBooking.buyers.map((buyer, index)=>(
+                <Forms>
+                    <h2>Assento {buyer.seat}</h2>
+                    <h3>Nome do comprador:</h3>
+                    <input onChange={(e)=>{saveName(e.target.value, index)}} type="text" placeholder="Digite seu nome..." ></input>
+                    <h3>CPF do comprador:</h3>
+                    <input onChange={(e)=>{saveCPF(e.target.value, index)}} type="number" placeholder="Digite seu CPF..." ></input>
+                </Forms>
+            )) : ""}
 
-            <Link to={tmpConfirmedBookingReq.name && tmpConfirmedBookingReq.cpf && tmpConfirmedBookingReq.ids.length > 0 ? `/filme/sessao/${idSession}/sucesso` : `/filme/assentos/${idSession}`}>
+            {canBook() ? 
+            <Link to={"/filme/sessao/${idSession}/sucesso"}>
                 <button onClick={book} className="submit">
                     Reservar assento(s)
-                </button>
+                </button> 
             </Link>
+            : ""}
 
             <Footer 
                 movie = {session.movie}
@@ -141,23 +154,37 @@ function Seat(props){
 
     const tmpConfirmedBookingReq = {...confirmedBookingReq};
 
-    function unselect(seatNumber, seatsList){
+    function unselect(seatNumber, booking){
         setIsSelected(false);
 
-        const indexUnselectedSeat = seatsList.indexOf(seatsList.find((seat) => seat === seatNumber));
-        seatsList.splice(indexUnselectedSeat, 1);
-        tmpConfirmedBookingReq.ids.splice(indexUnselectedSeat, 1);  
+        const indexUnselectedSeat = booking.buyers.indexOf(booking.buyers.find((buyer) => buyer.seat === seatNumber));
+        
+        booking.buyers.splice(indexUnselectedSeat, 1);
+        tmpConfirmedBookingReq.ids.splice(indexUnselectedSeat, 1);
+        tmpConfirmedBookingReq.compradores.splice(indexUnselectedSeat, 1);
     }
 
     function select(){
         const tmpConfirmedBooking = {...confirmedBooking};
-        if(isSelected) unselect(index+1, tmpConfirmedBooking.seats);
+        
+        if(isSelected) unselect(index+1, tmpConfirmedBooking);
         else{
             if(seat.isAvailable) {
+                tmpConfirmedBooking.buyers.push({
+                    name: "",
+                    cpf: "",
+                    seat: ""
+                })
                 setIsSelected(true);
                 tmpConfirmedBookingReq.ids.push(seat.id);
-                setConfirmedBookingReq({...tmpConfirmedBookingReq});            
-                tmpConfirmedBooking.seats.push(index + 1);
+                tmpConfirmedBookingReq.compradores.push({
+                    idAseento: seat.id,
+                    nome: "",
+                    cpf: ""
+                })
+                setConfirmedBookingReq({...tmpConfirmedBookingReq});    
+                const lastAddedSeat = tmpConfirmedBooking.buyers.length-1;
+                tmpConfirmedBooking.buyers[lastAddedSeat].seat = index + 1;
             }
             else alert("Esse assento não está disponível");
         }        

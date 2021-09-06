@@ -10,7 +10,7 @@ import Sessions from "../Sessions/Sessions";
 import SessionSeats from "../SessionSeats/SessionSeats";
 import Sucess from "../Sucess/Sucess";
 
-export default function App() {   
+export default function App() {  
 
     const [confirmedBooking, setConfirmedBooking] = useState({
         movie: "",
@@ -18,13 +18,9 @@ export default function App() {
             day: "",
             time: ""
         },
-        seats: [],
-        buyer:{
-            name: "",
-            cpf: ""
-        },
+        buyers:[],
         isConfirmed: false
-    });    
+    });
 
     return (
         <BrowserRouter>
@@ -36,7 +32,7 @@ export default function App() {
                     <SessionSeats confirmedBooking={confirmedBooking} setConfirmedBooking={setConfirmedBooking}/>
                 </Route>
                 <Route path="/filme/sessao/:idSession/sucesso" exact>
-                    <Sucess confirmedBooking={confirmedBooking} setConfirmedBooking = {setConfirmedBooking}/>
+                    <Sucess confirmedBooking={confirmedBooking}/>
                 </Route>
             </Switch>
         </BrowserRouter>
